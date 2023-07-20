@@ -22,5 +22,23 @@ public final class Constants {
     public static final int kLeftMotorFollow = 1;
     public static final int kRightMotorMain = 2;
     public static final int kRightMotorFollow = 3;
+
+    //Arm
+    public static final int kArmMotor = 4;
+
+    //Intake
+    public static final int kIntakeMotor = 5;
   }
+
+  public static class ArmConstants {
+    public static final double kSVolts = 0;
+    public static final double kVVoltSecondsPerRotation = 0;
+
+    public static final double kBottom = 0;
+    public static final double kLowArm = 0;
+    public static final double kMidArm = 10;
+    public static final double kHighArm = 20;
+  }
+
+
 }

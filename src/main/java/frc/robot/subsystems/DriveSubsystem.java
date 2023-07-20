@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -32,49 +33,45 @@ public class DriveSubsystem extends SubsystemBase {
     leftMotorFollow.set(ControlMode.Follower, MotorConstants.kLeftMotorMain);
     rightMotorFollow.set(ControlMode.Follower, MotorConstants.kRightMotorMain);
 
-    frontLeft.set(ControlMode.Follower, MotorConstants.kBackLeft);
-
-
-
-    frontLeft.setInverted(false);
-    backLeft.setInverted(false);
-    frontRight.setInverted(true);
-    backRight.setInverted(true);
+    leftMotorMain.setInverted(false);
+    leftMotorFollow.setInverted(false);
+    rightMotorMain.setInverted(true);
+    rightMotorFollow.setInverted(true);
      
-    frontLeft.configClosedloopRamp(0.5);
-    frontRight.configClosedloopRamp(0.5);
-    backLeft.configClosedloopRamp(0.5);
-    backRight.configClosedloopRamp(0.5);
+    leftMotorMain.configClosedloopRamp(0.5);
+    leftMotorFollow.configClosedloopRamp(0.5);
+    rightMotorMain.configClosedloopRamp(0.5);
+    rightMotorFollow.configClosedloopRamp(0.5);
 
     System.out.println("Motors Configured!"); 
   }
 
 
-  public void DriveArcade(double xSpeed, double ySpeed) {
-    drive.arcadeDrive(xSpeed, ySpeed);
+  public void DriveArcade(double moveSpeed, double rotateSpeed) {
+    double leftOutput = moveSpeed + rotateSpeed;
+    double rightOutput = moveSpeed - rotateSpeed;
+    leftMotorMain.set(ControlMode.PercentOutput, leftOutput);
+    rightMotorMain.set(ControlMode.PercentOutput, rightOutput);
   }
 
   public void DriveTank(double left, double right) {
-    drive.tankDrive(left, right);
+    leftMotorMain.set(ControlMode.PercentOutput, left);
+    rightMotorMain.set(ControlMode.PercentOutput, right);
   }
 
   public void stopDrive() {
-    leftDriveMotors.set(0);
-    rightDriveMotors.set(0);
+    leftMotorMain.set(ControlMode.PercentOutput, 0);
+    rightMotorMain.set(ControlMode.PercentOutput, 0);
   }
 
   public void setCoastMode() {
-    frontLeft.setIdleMode(IdleMode.kCoast);
-    backLeft.setIdleMode(IdleMode.kCoast);
-    frontRight.setIdleMode(IdleMode.kCoast);
-    backRight.setIdleMode(IdleMode.kCoast);
+    leftMotorMain.setNeutralMode(NeutralMode.Coast);
+    rightMotorMain.setNeutralMode(NeutralMode.Coast);
   }
 
   public void setBrakeMode() {
-    frontLeft.setIdleMode(IdleMode.kBrake);
-    backLeft.setIdleMode(IdleMode.kBrake);
-    frontRight.setIdleMode(IdleMode.kBrake);
-    backRight.setIdleMode(IdleMode.kBrake);
+    leftMotorMain.setNeutralMode(NeutralMode.Brake);
+    rightMotorMain.setNeutralMode(NeutralMode.Brake);
   }
 
   @Override

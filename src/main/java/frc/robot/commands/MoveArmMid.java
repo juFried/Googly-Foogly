@@ -6,24 +6,26 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.ArmConstants;
 
-public class DriveTank extends CommandBase {
-  /** Creates a new DriveTank. */
-  public DriveTank() {
+public class MoveArmMid extends CommandBase {
+  /** Creates a new MoveArmMid. */
+  public MoveArmMid() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.m_driveSubsystem);
+    addRequirements(RobotContainer.m_EncoderPID);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    RobotContainer.m_EncoderPID.setSetpoint(ArmConstants.kMidArm);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double left = RobotContainer.m_driverController.getLeftX()*-1;
-    double right = RobotContainer.m_driverController.getRightX();
-    RobotContainer.m_driveSubsystem.DriveTank(left, right);
+    double output = RobotContainer.m_EncoderPID.getMeasurement();
+    RobotContainer.m_EncoderPID.useOutput(output, ArmConstants.kMidArm);
   }
 
   // Called once the command ends or is interrupted.
