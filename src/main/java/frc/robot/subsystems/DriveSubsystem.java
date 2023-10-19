@@ -13,17 +13,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.MotorConstants;
 
 public class DriveSubsystem extends SubsystemBase {
-  
-  //Initialize motors
+
+  // Initialize motors
   TalonSRX leftMotorMain = new TalonSRX(MotorConstants.kLeftMotorMain);
   TalonSRX leftMotorFollow = new TalonSRX(MotorConstants.kLeftMotorFollow);
   TalonSRX rightMotorMain = new TalonSRX(MotorConstants.kRightMotorMain);
   TalonSRX rightMotorFollow = new TalonSRX(MotorConstants.kRightMotorFollow);
-  
 
-
-
-  
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
     configMotors();
@@ -37,15 +33,14 @@ public class DriveSubsystem extends SubsystemBase {
     leftMotorFollow.setInverted(false);
     rightMotorMain.setInverted(true);
     rightMotorFollow.setInverted(true);
-     
+
     leftMotorMain.configClosedloopRamp(0.5);
     leftMotorFollow.configClosedloopRamp(0.5);
     rightMotorMain.configClosedloopRamp(0.5);
     rightMotorFollow.configClosedloopRamp(0.5);
 
-    System.out.println("Motors Configured!"); 
+    System.out.println("Motors Configured!");
   }
-
 
   public void DriveArcade(double moveSpeed, double rotateSpeed) {
     double leftOutput = moveSpeed + rotateSpeed;
